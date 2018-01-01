@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
+
+    <item android:title=""
+          android:icon="@drawable/menu"
+          app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/navigation_news"
+                android:icon="@drawable/newspaper"
+                android:title="@string/title_news"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/navigation_narilok"
+                android:icon="@drawable/group_of_women"
+                android:title="@string/title_narilok"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/navigation_courses"
+                android:icon="@drawable/book"
+                android:title="@string/title_courses"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/navigation_hobby_zone"
+                android:icon="@drawable/puzzle"
+                android:title="@string/title_hobby_zone"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/navigation_events_calendar"
+                android:icon="@drawable/calendar"
+                android:title="@string/title_events_calendar"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/navigation_gallery"
+                android:icon="@drawable/gallery"
+                android:title="@string/title_gallery"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/navigation_business_women_network"
+                android:icon="@drawable/female_group"
+                android:title="@string/title_business_women_network"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/navigation_healing_counselling"
+                android:icon="@drawable/plant"
+                android:title="@string/title_healing_counselling"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/navigation_about_us"
+                android:icon="@drawable/users"
+                android:title="@string/title_about_us"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/navigation_contact_us"
+                android:icon="@drawable/telephone_outlined_tool"
+                android:title="@string/title_contact_us"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/navigation_share_app"
+                android:icon="@drawable/shapes"
+                android:title="@string/title_share_app"
+                app:showAsAction="never"/>
+
+            <item
+                android:id="@+id/navigation_user_profile"
+                android:icon="@drawable/user"
+                android:title="@string/title_user_profile"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
+</menu>

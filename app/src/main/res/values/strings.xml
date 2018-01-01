@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ABTMM</string>
+    <string name="title_about_us">About Us</string>
+    <string name="title_contact_us">Contact Us</string>
+    <string name="title_user_profile">User Profile</string>
+    <string name="title_share_app">Share App</string>
+    <string name="title_news">News</string>
+    <string name="title_narilok">Narilok</string>
+    <string name="title_courses">Courses</string>
+    <string name="title_hobby_zone">Hobby Zone</string>
+    <string name="title_events_calendar">Events Calendar</string>
+    <string name="title_gallery">Gallery</string>
+    <string name="title_business_women_network">Business Women Network</string>
+    <string name="title_healing_counselling">Healing &amp; Counselling</string>
+    <string name="alert_failure_title">Failure</string>
+    <string name="alert_network_failure_message">Please check internet connection.</string>
+    <string name="alert_network_failure_positive_button">Go to Settings</string>
+    <string name="alert_network_failure_negative_button">Cancel</string>
+    <string name="alert_failure_message">Failed to fetch data. Please try again later.</string>
+    <string name="alert_failure_positive_button">Okay</string>
+</resources>
