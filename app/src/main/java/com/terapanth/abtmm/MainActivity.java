@@ -7,7 +7,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.terapanth.abtmm.about.AboutFragment;
 import com.terapanth.abtmm.home.HomeFragment;
 import com.terapanth.abtmm.network.NetworkConnectivityCheckReceiver;
 import com.terapanth.abtmm.utils.NetworkUtils;
@@ -29,13 +29,14 @@ public class MainActivity extends AppCompatActivity {
     private NetworkConnectivityCheckReceiver networkConnectivityCheckReceiver;
     private boolean displayAlertForNetworkFailure = true;
     private ProgressDialog progressDialog;
+    private ActionBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActionBar bar = getSupportActionBar();
+        bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
         bar.setTitle(getString(R.string.app_name));
 
@@ -59,12 +60,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_news:
                 Toast.makeText(getApplicationContext(), "News menu page will display", Toast.LENGTH_SHORT).show();
                 //add the function to perform here
-//                fragmentManager = getFragmentManager();
-//                FirstFragment firstFragment = new FirstFragment();
-//                fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.fragment_container, firstFragment);
-//                fragmentTransaction.addToBackStack(FirstFragment.class.getSimpleName());
-//                fragmentTransaction.commit();
+                fragmentManager = getFragmentManager();
+                AboutFragment firstFragment = new AboutFragment();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, firstFragment);
+                fragmentTransaction.addToBackStack(AboutFragment.class.getSimpleName());
+                fragmentTransaction.commit();
+                bar.hide();
                 return(true);
             case R.id.navigation_narilok:
                 Toast.makeText(getApplicationContext(), "Narilok menu page will display", Toast.LENGTH_SHORT).show();

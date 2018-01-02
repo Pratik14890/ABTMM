@@ -4,16 +4,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.google.gson.Gson;
+import com.terapanth.abtmm.commons.Constants;
+import com.terapanth.abtmm.pojo.WebServiceParams;
 
 import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Suraj Prajapati on 1/2/2018.
@@ -21,111 +22,83 @@ import java.util.ArrayList;
 
 public class WebServiceHandler {
 
-    private final static String URL = "http://manage.abtmm.in/webservice/abtmm.asmx";
-    public String address, methodName;
-    public ArrayList<Object> parameters;
-    OnExecuteComplete onExecuteComplete;
-    private Object param;
-    private Class output;
-    private boolean showProgress = false;
+    public String methodName;
+    private List<WebServiceParams> webServiceParamsList;
+    private ExecutionCompleteListener executionCompleteListener;
     private Context context;
-    private String message = "Loading...";
-    private ProgressDialog dialog;
+    private SoapPrimitive resultString;
+    private ProgressDialog progressDialog;
 
-    public WebServiceHandler(){
-        this.address = URL;
-        parameters = new ArrayList<>();
+    public WebServiceHandler(Context context){
+        webServiceParamsList = new ArrayList<>();
+        this.context = context;
+        progressDialog = new ProgressDialog(context);
     }
 
-    public void showDialog(Context context, String message) {
-        this.context = context;
-        this.message = message;
-        showProgress= true;
+    public void showProgressDialog(boolean toShow, String message) {
+        if (toShow) {
+            progressDialog.setMessage(message);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            return;
+        }
+        progressDialog.dismiss();
     }
 
     public void setMethodName(String methodName) {
         this.methodName = methodName;
-        if(parameters !=null) parameters.clear();
     }
 
-    public void addParameter(Object parameter) {
-        parameters.add(parameter);
+    public void addParameter(String key, String parameter) {
+        WebServiceParams webServiceParams = new WebServiceParams();
+        webServiceParams.setKeyname(key);
+        webServiceParams.setValue(parameter);
+        webServiceParamsList.add(webServiceParams);
     }
 
-    public  void setOnExecuteComplete(OnExecuteComplete onExecuteComplete) {
-        this.onExecuteComplete = onExecuteComplete;
+    public  void setOnExecutionComplete(ExecutionCompleteListener executionCompleteListener) {
+        this.executionCompleteListener = executionCompleteListener;
     }
 
-    public void execute(Class outputClass) {
-        if (showProgress) {
-            dialog = new ProgressDialog(context);
-            dialog.setMessage(message);
-            dialog.show();
-            dialog.setCancelable(false);
-        }
-        new WebServiceHandler.ServiceAsync().execute();
-        this.output = outputClass;
+    public void execute() {
+        new AsyncCallWS().execute();
     }
 
-    public class ServiceAsync extends AsyncTask<String, String, String> {
+    public class AsyncCallWS extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
+            showProgressDialog(true, Constants.LOADER_MESSAGE);
         }
 
         @Override
-        protected String doInBackground(String... params) {
-            String s;
-            try {
-
-                String SOAP_ACTION = "http://tempuri.org/Caller";
-                String OPERATION_NAME = "Caller";
-                String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
-                String SOAP_ADDRESS = address;
-
-                SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
-                PropertyInfo pi = new PropertyInfo();
-                pi.setName("methodName");
-                pi.setValue(methodName);
-                pi.setType(String.class);
-                request.addProperty(pi);
-
-                if(parameters!= null && !parameters.isEmpty())
-                {PropertyInfo p1 = new PropertyInfo();
-                    p1.setName("parameters");
-                    p1.setValue(new Gson().toJson(parameters));
-                    p1.setType(String.class);
-                    request.addProperty(p1);}
-
-                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-                envelope.dotNet = true;
-                envelope.setOutputSoapObject(request);
-                HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS);
-                SoapPrimitive response;
-
-                httpTransport.call(SOAP_ACTION, envelope);
-                response = (SoapPrimitive) envelope.getResponse();
-                s = response.toString();
-            } catch (Exception e) {
-                s = e.getMessage();
-            }
-            return s;
+        protected Void doInBackground(Void... params) {
+            getDataFromWebServices();
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Object a = null;
-            if (dialog != null &&dialog.isShowing())
-                dialog.dismiss();
-            try {
-                a = new Gson().fromJson(s, output);
+        protected void onPostExecute(Void result) {
+            executionCompleteListener.onComplete(resultString.toString());
+            showProgressDialog(false, "");
+        }
 
-            } catch (Exception e) {
-                a = e.getMessage();
-            }
-            onExecuteComplete.onComplete(a);
+    }
+
+    public void getDataFromWebServices() {
+        String SOAP_ACTION = Constants.NAMESPACE + methodName;
+        try {
+            SoapObject Request = new SoapObject(Constants.NAMESPACE, methodName);
+            if(webServiceParamsList != null && webServiceParamsList.size() > 0) for (WebServiceParams webServiceParam : webServiceParamsList)
+                Request.addProperty(webServiceParam.getKeyname(), webServiceParam.getValue());
+            SoapSerializationEnvelope soapEnvelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            soapEnvelope.dotNet = true;
+            soapEnvelope.setOutputSoapObject(Request);
+            HttpTransportSE transport = new HttpTransportSE(Constants.BASE_URL);
+            transport.call(SOAP_ACTION, soapEnvelope);
+            resultString = (SoapPrimitive) soapEnvelope.getResponse();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
