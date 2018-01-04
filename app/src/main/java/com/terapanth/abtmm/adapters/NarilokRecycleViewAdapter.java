@@ -1,9 +1,7 @@
 package com.terapanth.abtmm.adapters;
 
 import android.net.Uri;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,7 @@ import java.util.List;
  * Created by Suraj Prajapati on 1/5/2018.
  */
 
-public class NarilokRecycleViewAdapter extends Adapter<NarilokRecycleViewAdapter.NarilokViewHandler> {
+public class NarilokRecycleViewAdapter extends RecyclerView.Adapter<NarilokRecycleViewAdapter.NarilokViewHandler> {
 
     private List<Magazine> magazines;
 
@@ -47,7 +45,7 @@ public class NarilokRecycleViewAdapter extends Adapter<NarilokRecycleViewAdapter
 
     @Override
     public int getItemCount() {
-        return magazines.size();
+        return 1;//magazines.size();
     }
 
     class NarilokViewHandler extends RecyclerView.ViewHolder {

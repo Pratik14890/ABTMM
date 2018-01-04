@@ -1,21 +1,20 @@
 package com.terapanth.abtmm.narilok;
 
+import android.app.Fragment;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.terapanth.abtmm.R;
+import com.terapanth.abtmm.adapters.NarilokRecycleViewAdapter;
 import com.terapanth.abtmm.services.OnExecuteComplete;
 import com.terapanth.abtmm.services.WebServiceHandler;
 import com.terapanth.abtmm.services.model.Magazine;
 import com.terapanth.abtmm.services.model.response.WS_MagazineResponse;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +24,9 @@ public class NarilokFragment extends Fragment {
     private final static String WS_GET_MAGAZINE_LIST = "GetMagazineList";
 
     List<Magazine> magazines;
+    RecyclerView recyclerView;
+    NarilokRecycleViewAdapter adapter = null;
+
 
     public NarilokFragment() {
         magazines = new ArrayList<>();
@@ -33,18 +35,6 @@ public class NarilokFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        WebServiceHandler ws = new WebServiceHandler();
-        ws.setMethodName(WS_GET_MAGAZINE_LIST);
-        ws.addAuth();
-        ws.setOnExecuteComplete(new OnExecuteComplete() {
-            @Override
-            public void onComplete(Object o) {
-                List<WS_MagazineResponse> list = Arrays.asList(WS_MagazineResponse[].class.cast(o));
-                for(WS_MagazineResponse a : list)
-                    magazines.add(a.getMagzine());
-            }
-        });
-        ws.execute(WS_MagazineResponse[].class);
     }
 
     @Override
@@ -55,7 +45,28 @@ public class NarilokFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_narilok_main, container, false);
+        final View view =  inflater.inflate(R.layout.fragment_narilok_main, container, false);
+
+        WebServiceHandler ws = new WebServiceHandler();
+        ws.setMethodName(WS_GET_MAGAZINE_LIST);
+        ws.addAuth();
+        ws.setOnExecuteComplete(new OnExecuteComplete() {
+            @Override
+            public void onComplete(Object o) {
+                List<WS_MagazineResponse> list = Arrays.asList(WS_MagazineResponse[].class.cast(o));
+                for(WS_MagazineResponse a : list)
+                    magazines.add(a.getMagzine());
+                adapter = new NarilokRecycleViewAdapter(magazines);
+
+                recyclerView = (RecyclerView) view.findViewById(R.id.recycle);
+                recyclerView.setAdapter(adapter);
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+        ws.execute(WS_MagazineResponse[].class);
+
+        return view;
     }
 
     @Override
