@@ -3,6 +3,7 @@ package com.terapanth.abtmm.services;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -22,8 +23,11 @@ import java.util.ArrayList;
 public class WebServiceHandler {
 
     private final static String URL = "http://manage.abtmm.in/webservice/abtmm.asmx";
+    private final static String AUTH_KEY_VALUE = "Adnkmdl230$fksJ#";
+    private final static String AUTH_KEY = "AuthKey";
+
     public String address, methodName;
-    public ArrayList<Object> parameters;
+    public ArrayList<PropertyInfo> parameters;
     OnExecuteComplete onExecuteComplete;
     private Object param;
     private Class output;
@@ -48,7 +52,20 @@ public class WebServiceHandler {
         if(parameters !=null) parameters.clear();
     }
 
-    public void addParameter(Object parameter) {
+
+    public void addParameter(String paramName, String paramValue, Class paramType) {
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName(paramName);
+        pi.setValue(paramValue);
+        pi.setType(paramType);
+        parameters.add(pi);
+    }
+
+    public void addAuth() {
+        addParameter(AUTH_KEY, AUTH_KEY_VALUE, String.class);
+    }
+
+    public void addParameter(PropertyInfo parameter) {
         parameters.add(parameter);
     }
 
@@ -79,24 +96,18 @@ public class WebServiceHandler {
             String s;
             try {
 
-                String SOAP_ACTION = "http://tempuri.org/Caller";
-                String OPERATION_NAME = "Caller";
+                //http://www.c-sharpcorner.com/UploadFile/88b6e5/how-to-call-web-service-in-android-using-soap/
+
+                String OPERATION_NAME = methodName;
+                String SOAP_ACTION = "http://tempuri.org/" + OPERATION_NAME;
                 String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
                 String SOAP_ADDRESS = address;
 
                 SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
-                PropertyInfo pi = new PropertyInfo();
-                pi.setName("methodName");
-                pi.setValue(methodName);
-                pi.setType(String.class);
-                request.addProperty(pi);
+                //request.addProperty(AuthKey, AuthKeyValue);
 
-                if(parameters!= null && !parameters.isEmpty())
-                {PropertyInfo p1 = new PropertyInfo();
-                    p1.setName("parameters");
-                    p1.setValue(new Gson().toJson(parameters));
-                    p1.setType(String.class);
-                    request.addProperty(p1);}
+                for(PropertyInfo pi : parameters)
+                    request.addProperty(pi);
 
                 SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                 envelope.dotNet = true;
@@ -110,6 +121,7 @@ public class WebServiceHandler {
             } catch (Exception e) {
                 s = e.getMessage();
             }
+            Log.i("WService", "doInBackground + " + s);
             return s;
         }
 
