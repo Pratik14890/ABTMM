@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.terapanth.abtmm.R;
-import com.terapanth.abtmm.services.ExecutionCompleteListener;
+import com.terapanth.abtmm.services.OnExecuteComplete;
 import com.terapanth.abtmm.services.WebServiceHandler;
+import com.terapanth.abtmm.services.model.response.WS_MagazineResponse;
 
 /**
  * Created by MindstixSoftware on 01/01/18.
@@ -37,19 +38,19 @@ public class AboutFragment extends Fragment {
             public void onClick(View v) {
 
 
-                WebServiceHandler client = new WebServiceHandler(getActivity());
+                WebServiceHandler client = new WebServiceHandler();
                 client.setMethodName("GetBWNMemberList");
-                client.addParameter("AuthKey","Adnkmdl230$fksJ#");
-                client.addParameter("Name","ABC");
-                client.addParameter("Profession","Student");
-                client.addParameter("City","Pune");
-                client.setOnExecutionComplete(new ExecutionCompleteListener() {
+                client.addAuth();
+                client.addParameter("Name","ABC", String.class);
+                client.addParameter("Profession","Student", String.class);
+                client.addParameter("City","Pune", String.class);
+                client.setOnExecuteComplete(new OnExecuteComplete() {
                     @Override
-                    public void onComplete(String str) {
-                        String str1 = str;
+                    public void onComplete(Object str) {
+                        String str1 = String.valueOf(str);
                     }
                 });
-                client.execute();
+                client.execute(WS_MagazineResponse[].class);
             }
         });
 

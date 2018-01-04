@@ -67,5 +67,4 @@ public class NarilokFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
->>>>>>> ab274ed6c0b6efde13eec1e8d95dbd4ed0f71858
 }
