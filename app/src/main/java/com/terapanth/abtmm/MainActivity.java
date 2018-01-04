@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         bar = getSupportActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorPrimaryDark)));
-        bar.setTitle(getString(R.string.app_name));
+        bar.setDisplayShowCustomEnabled(true);
+        bar.setCustomView(R.layout.custom_action_bar);
 
         fragmentManager = getFragmentManager();
         HomeFragment homeFragment = new HomeFragment();
@@ -60,14 +61,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_news:
                 Toast.makeText(getApplicationContext(), "News menu page will display", Toast.LENGTH_SHORT).show();
                 //add the function to perform here
-                fragmentManager = getFragmentManager();
-                AboutFragment firstFragment = new AboutFragment();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, firstFragment);
-                fragmentTransaction.addToBackStack(AboutFragment.class.getSimpleName());
-                fragmentTransaction.commit();
-                bar.hide();
-                return(true);
             case R.id.navigation_narilok:
                 Toast.makeText(getApplicationContext(), "Narilok menu page will display", Toast.LENGTH_SHORT).show();
                 //add the function to perform here
@@ -105,6 +98,12 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.navigation_about_us:
                 Toast.makeText(getApplicationContext(), "About Us menu page will display", Toast.LENGTH_SHORT).show();
+                fragmentManager = getFragmentManager();
+                AboutFragment firstFragment = new AboutFragment();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, firstFragment);
+                fragmentTransaction.addToBackStack(AboutFragment.class.getSimpleName());
+                fragmentTransaction.commit();
                 return(true);
 
             case R.id.navigation_contact_us:
@@ -125,17 +124,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        networkConnectivityCheckReceiver = new NetworkConnectivityCheckReceiver(this, displayAlertForNetworkFailure);
-        registerReceiver(networkConnectivityCheckReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
-        progressDialog = new ProgressDialog(this);
-
-        if(NetworkUtils.getConnectivityStatus(getApplicationContext())) {
-
-        } else {
-
-        }
     }
 
     @Override
@@ -229,4 +217,11 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
+    public boolean isNetworkConnected() {
+        if(null == networkConnectivityCheckReceiver) {
+            networkConnectivityCheckReceiver = new NetworkConnectivityCheckReceiver(this, displayAlertForNetworkFailure);
+            registerReceiver(networkConnectivityCheckReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        }
+        return NetworkUtils.getConnectivityStatus(getApplicationContext());
+    }
 }

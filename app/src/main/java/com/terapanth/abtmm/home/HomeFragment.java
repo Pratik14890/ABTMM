@@ -1,6 +1,7 @@
 package com.terapanth.abtmm.home;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.terapanth.abtmm.MainActivity;
 import com.terapanth.abtmm.R;
 
 import java.util.ArrayList;
@@ -29,10 +31,17 @@ public class HomeFragment extends Fragment {
     private ArrayList<Integer> XMENArray = new ArrayList<Integer>();
     Timer swipeTimer;
     CircleIndicator indicator;
+    public static MainActivity mainActivity;
+    private Context context;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mainActivity = (MainActivity) getActivity();
+        this.context = mainActivity.getApplicationContext();
+
+
     }
 
     @Nullable
