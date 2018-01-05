@@ -8,10 +8,6 @@ import com.terapanth.abtmm.MainActivity;
 import com.terapanth.abtmm.R;
 import com.terapanth.abtmm.utils.NetworkUtils;
 
-/**
- * Created by MindstixSoftware on 01/01/18.
- */
-
 public class NetworkConnectivityCheckReceiver extends BroadcastReceiver {
 
     MainActivity activity = null;

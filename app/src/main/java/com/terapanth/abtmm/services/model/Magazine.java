@@ -1,9 +1,5 @@
 package com.terapanth.abtmm.services.model;
 
-/**
- * Created by Suraj Prajapati on 1/5/2018.
- */
-
 public class Magazine {
     String id;
     String name;

@@ -6,11 +6,7 @@ import android.content.Intent;
 import com.terapanth.abtmm.MainActivity;
 import com.terapanth.abtmm.commons.Constants;
 
-/**
- * Created by MindstixSoftware on 01/01/18.
- */
-
-public class shareUtils {
+public class ShareUtils {
 
     public static void shareMe(Context context, String share) {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);

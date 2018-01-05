@@ -1,9 +1,5 @@
 package com.terapanth.abtmm.commons;
 
-/**
- * Created by MindstixSoftware on 01/01/18.
- */
-
 public class Constants {
 
     //SOAP Constants

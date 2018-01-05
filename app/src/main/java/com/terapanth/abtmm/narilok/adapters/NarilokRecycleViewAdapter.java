@@ -23,11 +23,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-
-/**
- * Created by Suraj Prajapati on 1/5/2018.
- */
-
 public class NarilokRecycleViewAdapter extends RecyclerView.Adapter<NarilokRecycleViewAdapter.NarilokViewHandler> {
 
     private List<Magazine> magazines;

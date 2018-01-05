@@ -16,10 +16,6 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.util.ArrayList;
 
-/**
- * Created by Suraj Prajapati on 1/2/2018.
- */
-
 public class WebServiceHandler {
 
     private final static String URL = "http://manage.abtmm.in/webservice/abtmm.asmx";

@@ -1,4 +1,4 @@
-package com.terapanth.abtmm.home;
+package com.terapanth.abtmm.news;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -7,17 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.terapanth.abtmm.R;
 
 import java.util.ArrayList;
 
-public class ImageSliderAdapter extends PagerAdapter {
+public class NewsImageAdapter extends PagerAdapter {
 
-    private ArrayList<Integer> images;
+    Context context;
+    ArrayList<String> images;
     private LayoutInflater inflater;
-    private Context context;
 
-    public ImageSliderAdapter(Context context, ArrayList<Integer> images) {
+    public NewsImageAdapter(Context context, ArrayList<String> images) {
         this.context = context;
         this.images=images;
         inflater = LayoutInflater.from(context);
@@ -29,23 +30,22 @@ public class ImageSliderAdapter extends PagerAdapter {
     }
 
     @Override
+    public Object instantiateItem(ViewGroup view, int position) {
+        View myImageLayout = inflater.inflate(R.layout.slide, view, false);
+        ImageView myImage = (ImageView) myImageLayout.findViewById(R.id.image);
+
+        Picasso.with(context).load(images.get(position)).error(R.drawable.no_image).into(myImage);
+
+        view.addView(myImageLayout);
+        return myImageLayout;
+    }
+
+    @Override
     public int getCount() {
         return images.size();
     }
 
     @Override
-    public Object instantiateItem(ViewGroup view, int position) {
-        View myImageLayout = inflater.inflate(R.layout.slide, view, false);
-        ImageView myImage = (ImageView) myImageLayout
-                .findViewById(R.id.image);
-        myImage.setImageResource(images.get(position));
-        view.addView(myImageLayout, 0);
-        return myImageLayout;
-    }
-
-    @Override
     public boolean isViewFromObject(View view, Object object) {
-        return view.equals(object);
-    }
-
+        return view.equals(object);    }
 }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.terapanth.abtmm.about.AboutFragment;
 import com.terapanth.abtmm.home.HomeFragment;
 import com.terapanth.abtmm.network.NetworkConnectivityCheckReceiver;
+import com.terapanth.abtmm.news.NewsSummaryFragment;
 import com.terapanth.abtmm.utils.NetworkUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction fragmentTransaction;
     private NetworkConnectivityCheckReceiver networkConnectivityCheckReceiver;
     private boolean displayAlertForNetworkFailure = true;
-    private ProgressDialog progressDialog;
+    public ProgressDialog progressDialog;
     private ActionBar bar;
 
     @Override
@@ -61,15 +62,22 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_news:
                 Toast.makeText(getApplicationContext(), "News menu page will display", Toast.LENGTH_SHORT).show();
                 //add the function to perform here
+                fragmentManager = getFragmentManager();
+                NewsSummaryFragment newsSummaryFragment = new NewsSummaryFragment();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, newsSummaryFragment);
+                fragmentTransaction.addToBackStack(NewsSummaryFragment.class.getSimpleName());
+                fragmentTransaction.commit();
+                return (true);
             case R.id.navigation_narilok:
                 Toast.makeText(getApplicationContext(), "Narilok menu page will display", Toast.LENGTH_SHORT).show();
                 //add the function to perform here
-//                fragmentManager = getFragmentManager();
-//                SecondFragment secondFragment = new SecondFragment();
-//                fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.fragment_container, secondFragment);
-//                fragmentTransaction.addToBackStack(FirstFragment.class.getSimpleName());
-//                fragmentTransaction.commit();
+                fragmentManager = getFragmentManager();
+                NarilokFragment narilokFragment = new NarilokFragment();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, narilokFragment);
+                fragmentTransaction.addToBackStack(NarilokFragment.class.getSimpleName());
+                fragmentTransaction.commit();
                 return(true);
 
             case R.id.navigation_courses:
@@ -124,6 +132,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if(null == progressDialog)
+            progressDialog = new ProgressDialog(getApplicationContext());
+
+        if(null == networkConnectivityCheckReceiver) {
+            networkConnectivityCheckReceiver = new NetworkConnectivityCheckReceiver(this, displayAlertForNetworkFailure);
+            registerReceiver(networkConnectivityCheckReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        }
     }
 
     @Override
@@ -166,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
 
             return;
         }
-
         progressDialog.dismiss();
     }
 
@@ -222,6 +236,9 @@ public class MainActivity extends AppCompatActivity {
             networkConnectivityCheckReceiver = new NetworkConnectivityCheckReceiver(this, displayAlertForNetworkFailure);
             registerReceiver(networkConnectivityCheckReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         }
+
+//        showProgressDialog(true, Constants.LOADER_MESSAGE);
+
         return NetworkUtils.getConnectivityStatus(getApplicationContext());
     }
 }
