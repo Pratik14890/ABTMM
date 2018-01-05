@@ -7,15 +7,19 @@
 
     <ImageView
         android:id="@+id/magazine_img"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@color/cardview_dark_background"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center_vertical"
+        android:duplicateParentState="true"
         android:layout_margin="10dp" />
 
     <TextView
         android:id="@+id/magazine_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:duplicateParentState="true"
         android:layout_margin="10dp"
+        android:textSize="16sp"
+        android:layout_gravity="center_vertical"
         android:text="***Magazine name" />
 </LinearLayout>

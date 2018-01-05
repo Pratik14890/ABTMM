@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.terapanth.abtmm.about.AboutFragment;
 import com.terapanth.abtmm.home.HomeFragment;
-import com.terapanth.abtmm.narilok.narilokFragment;
 import com.terapanth.abtmm.network.NetworkConnectivityCheckReceiver;
 import com.terapanth.abtmm.utils.NetworkUtils;
 
@@ -43,10 +42,11 @@ public class MainActivity extends AppCompatActivity {
         bar.setCustomView(R.layout.custom_action_bar);
 
         fragmentManager = getFragmentManager();
-       //HomeFragment homeFragment = new HomeFragment();
-        narilokFragment homeFragment = new narilokFragment();
+        HomeFragment homeFragment = new HomeFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, homeFragment).commit();
+        fragmentTransaction.replace(R.id.fragment_container, homeFragment);
+        fragmentTransaction.addToBackStack(HomeFragment.class.getSimpleName());
+        fragmentTransaction.commit();
     }
 
     @Override

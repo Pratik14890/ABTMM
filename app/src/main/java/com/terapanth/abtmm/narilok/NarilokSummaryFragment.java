@@ -1,8 +1,6 @@
 package com.terapanth.abtmm.narilok;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,38 +10,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitorWrapper;
 import com.google.gson.Gson;
 import com.terapanth.abtmm.R;
 import com.terapanth.abtmm.narilok.adapters.NarilokRecycleViewAdapter;
+import com.terapanth.abtmm.narilok.adapters.NarilokSummaryRecycleViewAdapter;
 import com.terapanth.abtmm.services.OnExecuteComplete;
 import com.terapanth.abtmm.services.WebServiceHandler;
 import com.terapanth.abtmm.services.model.Magazine;
+import com.terapanth.abtmm.services.model.MagazineSummary;
 import com.terapanth.abtmm.services.model.response.WS_MagazineResponse;
-
-import org.json.JSONStringer;
+import com.terapanth.abtmm.services.model.response.WS_MagazineSummaryResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class NarilokFragment extends Fragment implements ChangeFragment {
+public class NarilokSummaryFragment extends Fragment {
 
-    private final static String WS_GET_MAGAZINE_LIST = "GetMagazineList";
+    private final static String GET_MAGAZINE_SUMMARY_LIST = "GetMagazineSummaryList";
 
-    List<Magazine> magazines;
+    String magazineId;
+
+    List<MagazineSummary> magazines;
     RecyclerView recyclerView;
-    NarilokRecycleViewAdapter adapter = null;
+    NarilokSummaryRecycleViewAdapter adapter = null;
 
 
-    public NarilokFragment() {
+    public NarilokSummaryFragment() {
         magazines = new ArrayList<>();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,15 +50,17 @@ public class NarilokFragment extends Fragment implements ChangeFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view =  inflater.inflate(R.layout.fragment_narilok_main, container, false);
+        this.magazineId = this.getArguments().getString("magazineId");
+
+        View view = inflater.inflate(R.layout.fragment_narilok_summary_list, container, false);
         init(view);
         return view;
     }
-
     public void init(final View view){
         WebServiceHandler ws = new WebServiceHandler();
-        ws.setMethodName(WS_GET_MAGAZINE_LIST);
+        ws.setMethodName(GET_MAGAZINE_SUMMARY_LIST);
         ws.addAuth();
+        ws.addParameter("MagazineId", magazineId, String.class);
         ws.setOnExecuteComplete(new OnExecuteComplete() {
             @Override
             public void onComplete(Object o) {
@@ -71,9 +69,9 @@ public class NarilokFragment extends Fragment implements ChangeFragment {
 
                     magazines.clear();
 
-                    List<WS_MagazineResponse> list = Arrays.asList(WS_MagazineResponse[].class.cast(o));
-                    for (WS_MagazineResponse a : list) {
-                        magazines.add(a.getMagzine());
+                    List<WS_MagazineSummaryResponse> list = Arrays.asList(WS_MagazineSummaryResponse[].class.cast(o));
+                    for (WS_MagazineSummaryResponse a : list) {
+                        magazines.add(a.getMagzineSuammary());
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -82,9 +80,9 @@ public class NarilokFragment extends Fragment implements ChangeFragment {
                 }
             }
         });
-        ws.execute(WS_MagazineResponse[].class);
+        ws.execute(WS_MagazineSummaryResponse[].class);
 
-        adapter = new NarilokRecycleViewAdapter(getActivity(), magazines, this);
+        adapter = new NarilokSummaryRecycleViewAdapter(getActivity(), magazines);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle);
         recyclerView.setAdapter(adapter);
@@ -99,21 +97,5 @@ public class NarilokFragment extends Fragment implements ChangeFragment {
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    @Override
-    public void changeFragmentWithInput(String param) {
-        // Assuming here param will be the magazine id passed by adapter
-        Bundle bundle = new Bundle();
-        bundle.putString("magazineId", param);
-
-        FragmentManager fragmentManager = getFragmentManager();
-        NarilokSummaryFragment nextFragment = new NarilokSummaryFragment();
-        nextFragment.setArguments(bundle);
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, nextFragment)
-                .addToBackStack(NarilokFragment.class.getSimpleName())
-                .commit();
-
     }
 }

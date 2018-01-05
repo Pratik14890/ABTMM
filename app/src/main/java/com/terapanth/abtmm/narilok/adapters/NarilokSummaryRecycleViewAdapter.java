@@ -1,11 +1,7 @@
 package com.terapanth.abtmm.narilok.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +13,9 @@ import com.squareup.picasso.Picasso;
 import com.terapanth.abtmm.R;
 import com.terapanth.abtmm.narilok.ChangeFragment;
 import com.terapanth.abtmm.services.model.Magazine;
+import com.terapanth.abtmm.services.model.MagazineSummary;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,16 +23,14 @@ import java.util.List;
  * Created by Suraj Prajapati on 1/5/2018.
  */
 
-public class NarilokRecycleViewAdapter extends RecyclerView.Adapter<NarilokRecycleViewAdapter.NarilokViewHandler> {
+public class NarilokSummaryRecycleViewAdapter extends RecyclerView.Adapter<NarilokSummaryRecycleViewAdapter.NarilokViewHandler> {
 
-    private List<Magazine> magazines;
+    private List<MagazineSummary> magazines;
     private Context context;
-    private ChangeFragment next;
 
-    public NarilokRecycleViewAdapter(Context context, List<Magazine> magazines, ChangeFragment next) {
+    public NarilokSummaryRecycleViewAdapter(Context context, List<MagazineSummary> magazines) {
         this.context = context;
         this.magazines = magazines;
-        this.next = next;
     }
 
     @Override
@@ -50,14 +43,14 @@ public class NarilokRecycleViewAdapter extends RecyclerView.Adapter<NarilokRecyc
 
     @Override
     public void onBindViewHolder(NarilokViewHandler holder, int position) {
-        final Magazine m = magazines.get(position);
+        final MagazineSummary m = magazines.get(position);
         holder.title.setText(m.getName());
         Picasso.with(context).load(m.getCoverImageUrl()).resize(75, 75).into(holder.img);
 
         holder.row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                next.changeFragmentWithInput(m.getId());
+                //TODO: Open pdf
             }
         });
     }
