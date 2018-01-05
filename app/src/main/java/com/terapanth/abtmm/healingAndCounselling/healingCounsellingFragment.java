@@ -6,5 +6,5 @@ import android.app.Fragment;
  * Created by MindstixSoftware on 01/01/18.
  */
 
-public class healingCounsellingFragment extends Fragment {
+public class HealingCounsellingFragment extends Fragment {
 }

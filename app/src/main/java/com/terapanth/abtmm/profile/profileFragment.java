@@ -6,5 +6,5 @@ import android.app.Fragment;
  * Created by MindstixSoftware on 01/01/18.
  */
 
-public class profileFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 }
