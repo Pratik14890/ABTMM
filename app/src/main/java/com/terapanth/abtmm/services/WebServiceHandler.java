@@ -133,7 +133,6 @@ public class WebServiceHandler {
                 dialog.dismiss();
             try {
                 a = new Gson().fromJson(s, output);
-
             } catch (Exception e) {
                 a = e.getMessage();
             }
