@@ -36,8 +36,6 @@ public class AboutFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 WebServiceHandler client = new WebServiceHandler();
                 client.setMethodName("GetBWNMemberList");
                 client.addAuth();
