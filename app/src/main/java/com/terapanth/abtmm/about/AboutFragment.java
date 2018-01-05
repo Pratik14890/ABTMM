@@ -13,10 +13,6 @@ import com.terapanth.abtmm.services.OnExecuteComplete;
 import com.terapanth.abtmm.services.WebServiceHandler;
 import com.terapanth.abtmm.services.model.response.WS_MagazineResponse;
 
-/**
- * Created by MindstixSoftware on 01/01/18.
- */
-
 public class AboutFragment extends Fragment {
 
     Button btn;

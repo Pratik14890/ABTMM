@@ -29,10 +29,6 @@ import java.util.TimerTask;
 
 import me.relex.circleindicator.CircleIndicator;
 
-/**
- * Created by MindstixSoftware on 05/01/18.
- */
-
 public class NewsDetailsFragment extends Fragment implements View.OnClickListener {
 
     private static MainActivity mainActivity;

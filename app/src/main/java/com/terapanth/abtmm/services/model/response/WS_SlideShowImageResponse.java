@@ -3,10 +3,6 @@ package com.terapanth.abtmm.services.model.response;
 import com.terapanth.abtmm.services.model.news.NewsSummary;
 import com.terapanth.abtmm.services.model.news.SlideShowImage;
 
-/**
- * Created by Suraj Prajapati on 1/4/2018.
- */
-
 public class WS_SlideShowImageResponse {
 
     String ResponseMessage;

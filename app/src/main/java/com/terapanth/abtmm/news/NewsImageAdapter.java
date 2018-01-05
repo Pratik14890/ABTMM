@@ -12,10 +12,6 @@ import com.terapanth.abtmm.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by MindstixSoftware on 05/01/18.
- */
-
 public class NewsImageAdapter extends PagerAdapter {
 
     Context context;

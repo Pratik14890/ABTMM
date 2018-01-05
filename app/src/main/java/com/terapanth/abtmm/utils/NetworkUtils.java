@@ -4,10 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-/**
- * Created by MindstixSoftware on 01/01/18.
- */
-
 public class NetworkUtils {
 
     public static boolean isConnected = false;

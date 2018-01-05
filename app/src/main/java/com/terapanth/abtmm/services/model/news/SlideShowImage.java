@@ -2,10 +2,6 @@ package com.terapanth.abtmm.services.model.news;
 
 import java.io.Serializable;
 
-/**
- * Created by Suraj Prajapati on 1/5/2018.
- */
-
 public class SlideShowImage implements Serializable {
 
     String imageUrl;

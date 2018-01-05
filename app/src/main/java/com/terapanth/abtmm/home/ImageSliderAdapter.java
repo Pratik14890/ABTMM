@@ -11,10 +11,6 @@ import com.terapanth.abtmm.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by MindstixSoftware on 31/12/17.
- */
-
 public class ImageSliderAdapter extends PagerAdapter {
 
     private ArrayList<Integer> images;

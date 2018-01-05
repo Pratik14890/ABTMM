@@ -2,10 +2,6 @@ package com.terapanth.abtmm.services.model.response;
 
 import com.terapanth.abtmm.services.model.news.NewsSummary;
 
-/**
- * Created by Suraj Prajapati on 1/4/2018.
- */
-
 public class WS_NewsSummaryResponse {
 
     String ResponseMessage;

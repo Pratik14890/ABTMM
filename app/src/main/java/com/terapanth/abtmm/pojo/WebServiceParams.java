@@ -1,9 +1,5 @@
 package com.terapanth.abtmm.pojo;
 
-/**
- * Created by MindstixSoftware on 03/01/18.
- */
-
 public class WebServiceParams {
 
     String keyname;

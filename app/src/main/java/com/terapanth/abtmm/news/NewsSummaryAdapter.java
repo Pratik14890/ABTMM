@@ -19,10 +19,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by MindstixSoftware on 05/01/18.
- */
-
 public class NewsSummaryAdapter extends RecyclerView.Adapter<NewsSummaryAdapter.ViewHolder>{
 
     private Context context;

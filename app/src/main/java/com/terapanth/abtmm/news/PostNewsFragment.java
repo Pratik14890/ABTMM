@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -29,26 +28,16 @@ import com.terapanth.abtmm.R;
 import com.terapanth.abtmm.home.HomeFragment;
 import com.terapanth.abtmm.services.OnExecuteComplete;
 import com.terapanth.abtmm.services.WebServiceHandler;
-import com.terapanth.abtmm.services.model.news.NewsSummary;
 import com.terapanth.abtmm.services.model.news.PostNews;
-import com.terapanth.abtmm.services.model.response.WS_NewsSummaryResponse;
 import com.terapanth.abtmm.services.model.response.WS_PostNewsResponse;
-
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-
-/**
- * Created by MindstixSoftware on 05/01/18.
- */
 
 public class PostNewsFragment extends Fragment implements View.OnClickListener {
 

@@ -7,10 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by MindstixSoftware on 05/01/18.
- */
-
 public class DateUtils {
 
     public static String getFormattedDateOrTime(String strOriginalDate, String currentFormat, String requiredFormat) throws ParseException {

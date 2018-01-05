@@ -23,15 +23,10 @@ import com.terapanth.abtmm.services.OnExecuteComplete;
 import com.terapanth.abtmm.services.WebServiceHandler;
 import com.terapanth.abtmm.services.model.news.NewsSummary;
 import com.terapanth.abtmm.services.model.response.WS_NewsSummaryResponse;
-import com.terapanth.abtmm.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-/**
- * Created by MindstixSoftware on 01/01/18.
- */
 
 public class NewsSummaryFragment extends Fragment implements View.OnClickListener{
 

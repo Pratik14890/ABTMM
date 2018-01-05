@@ -14,12 +14,9 @@ import android.view.ViewGroup;
 
 import com.terapanth.abtmm.MainActivity;
 import com.terapanth.abtmm.R;
-import com.terapanth.abtmm.news.NewsSummaryFragment;
 import com.terapanth.abtmm.services.OnExecuteComplete;
 import com.terapanth.abtmm.services.WebServiceHandler;
-import com.terapanth.abtmm.services.model.news.NewsSummary;
 import com.terapanth.abtmm.services.model.news.SlideShowImage;
-import com.terapanth.abtmm.services.model.response.WS_NewsSummaryResponse;
 import com.terapanth.abtmm.services.model.response.WS_SlideShowImageResponse;
 
 import java.util.ArrayList;
@@ -29,10 +26,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import me.relex.circleindicator.CircleIndicator;
-
-/**
- * Created by MindstixSoftware on 31/12/17.
- */
 
 public class HomeFragment extends Fragment {
 

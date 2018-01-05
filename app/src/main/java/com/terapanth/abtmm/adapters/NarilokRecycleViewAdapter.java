@@ -14,11 +14,6 @@ import com.terapanth.abtmm.services.model.Magazine;
 
 import java.util.List;
 
-
-/**
- * Created by Suraj Prajapati on 1/5/2018.
- */
-
 public class NarilokRecycleViewAdapter extends RecyclerView.Adapter<NarilokRecycleViewAdapter.NarilokViewHandler> {
 
     private List<Magazine> magazines;

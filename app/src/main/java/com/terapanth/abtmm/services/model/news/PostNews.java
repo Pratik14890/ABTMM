@@ -1,9 +1,5 @@
 package com.terapanth.abtmm.services.model.news;
 
-/**
- * Created by MindstixSoftware on 05/01/18.
- */
-
 public class PostNews {
 
     String responseMessage;
