@@ -3,23 +3,29 @@ package com.terapanth.abtmm.narilok;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatVisitorWrapper;
+import com.google.gson.Gson;
 import com.terapanth.abtmm.R;
-import com.terapanth.abtmm.adapters.NarilokRecycleViewAdapter;
+import com.terapanth.abtmm.narilok.adapters.NarilokRecycleViewAdapter;
 import com.terapanth.abtmm.services.OnExecuteComplete;
 import com.terapanth.abtmm.services.WebServiceHandler;
 import com.terapanth.abtmm.services.model.Magazine;
 import com.terapanth.abtmm.services.model.response.WS_MagazineResponse;
 
+import org.json.JSONStringer;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class NarilokFragment extends Fragment {
+public class narilokFragment extends Fragment {
 
     private final static String WS_GET_MAGAZINE_LIST = "GetMagazineList";
 
@@ -28,7 +34,7 @@ public class NarilokFragment extends Fragment {
     NarilokRecycleViewAdapter adapter = null;
 
 
-    public NarilokFragment() {
+    public narilokFragment() {
         magazines = new ArrayList<>();
     }
 
@@ -45,28 +51,39 @@ public class NarilokFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view =  inflater.inflate(R.layout.fragment_narilok_main, container, false);
 
+        final View view =  inflater.inflate(R.layout.fragment_narilok_main, container, false);
+        init(view);
+        return view;
+    }
+
+    public void init(final View view){
         WebServiceHandler ws = new WebServiceHandler();
         ws.setMethodName(WS_GET_MAGAZINE_LIST);
         ws.addAuth();
         ws.setOnExecuteComplete(new OnExecuteComplete() {
             @Override
             public void onComplete(Object o) {
-                List<WS_MagazineResponse> list = Arrays.asList(WS_MagazineResponse[].class.cast(o));
-                for(WS_MagazineResponse a : list)
-                    magazines.add(a.getMagzine());
-                adapter = new NarilokRecycleViewAdapter(magazines);
+                try {
+                    Log.i("narilokFragment", "Response Object : " + new Gson().toJson(o));
 
-                recyclerView = (RecyclerView) view.findViewById(R.id.recycle);
-                recyclerView.setAdapter(adapter);
+                    List<WS_MagazineResponse> list = Arrays.asList(WS_MagazineResponse[].class.cast(o));
+                    for (WS_MagazineResponse a : list)
+                        magazines.add(a.getMagzine());
+                    adapter = new NarilokRecycleViewAdapter(getActivity(), magazines);
 
-                adapter.notifyDataSetChanged();
+                    recyclerView = (RecyclerView) view.findViewById(R.id.recycle);
+                    recyclerView.setAdapter(adapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                    adapter.notifyDataSetChanged();
+                }
+                catch (ClassCastException ex){
+                    Log.e("narilokFragment", "Exception in casting response object in expected Object", ex);
+                }
             }
         });
         ws.execute(WS_MagazineResponse[].class);
-
-        return view;
     }
 
     @Override

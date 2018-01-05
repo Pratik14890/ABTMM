@@ -1,14 +1,12 @@
 package com.terapanth.abtmm;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -20,7 +18,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.terapanth.abtmm.home.HomeFragment;
-import com.terapanth.abtmm.narilok.NarilokFragment;
+import com.terapanth.abtmm.narilok.narilokFragment;
 import com.terapanth.abtmm.network.NetworkConnectivityCheckReceiver;
 import com.terapanth.abtmm.utils.NetworkUtils;
 
@@ -42,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         bar.setTitle(getString(R.string.app_name));
 
         fragmentManager = getFragmentManager();
-        NarilokFragment homeFragment = new NarilokFragment();
+       //HomeFragment homeFragment = new HomeFragment();
+        narilokFragment homeFragment = new narilokFragment();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, homeFragment).commit();
     }
