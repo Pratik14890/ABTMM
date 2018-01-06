@@ -1,6 +1,8 @@
 package com.terapanth.abtmm.news;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,6 +49,9 @@ public class NewsDetailsFragment extends Fragment implements View.OnClickListene
     private ImageButton btnBack;
     private TextView txtBack;
     private ImageButton btnShare;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private TextView postButton;
 
     public NewsDetailsFragment() {
         newsImages = new ArrayList<>();
@@ -105,6 +110,7 @@ public class NewsDetailsFragment extends Fragment implements View.OnClickListene
         txtDescription = (TextView) view.findViewById(R.id.txt_description);
         txtPostedBy = (TextView) view.findViewById(R.id.txt_posted_by);
         txtPostedDate = (TextView) view.findViewById(R.id.txt_posted_date);
+        postButton = (TextView)view.findViewById(R.id.txt_bottom_view);
     }
 
     private void init() {
@@ -150,8 +156,8 @@ public class NewsDetailsFragment extends Fragment implements View.OnClickListene
         init();
 
         txtDescription.setText(String.valueOf(newsSummary.getDescription()));
-        txtPostedBy.setText(String.valueOf(newsSummary.getPostedBy()));
-        txtPostedDate.setText(String.valueOf(newsSummary.getPostedDate()));
+        txtPostedBy.setText("Posted By: " + String.valueOf(newsSummary.getPostedBy()));
+        txtPostedDate.setText("Posted Date: " + String.valueOf(newsSummary.getPostedDate()));
     }
 
     private void addImageUrl(String url) {
@@ -164,6 +170,7 @@ public class NewsDetailsFragment extends Fragment implements View.OnClickListene
         btnBack.setOnClickListener(this);
         txtBack.setOnClickListener(this);
         btnShare.setOnClickListener(this);
+        postButton.setOnClickListener(this);
     }
 
     @Override
@@ -184,6 +191,15 @@ public class NewsDetailsFragment extends Fragment implements View.OnClickListene
 
             case R.id.toolbar_back_text:
                 mainActivity.onBackPressed();
+                break;
+
+            case R.id.txt_bottom_view:
+                fragmentManager = getFragmentManager();
+                PostNewsFragment postNewsFragment = new PostNewsFragment();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, postNewsFragment);
+                fragmentTransaction.addToBackStack(PostNewsFragment.class.getSimpleName());
+                fragmentTransaction.commit();
                 break;
         }
     }

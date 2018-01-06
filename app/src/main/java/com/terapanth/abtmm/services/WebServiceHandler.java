@@ -91,16 +91,12 @@ public class WebServiceHandler {
         protected String doInBackground(String... params) {
             String s;
             try {
-
-                //http://www.c-sharpcorner.com/UploadFile/88b6e5/how-to-call-web-service-in-android-using-soap/
-
                 String OPERATION_NAME = methodName;
                 String SOAP_ACTION = "http://tempuri.org/" + OPERATION_NAME;
                 String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
                 String SOAP_ADDRESS = address;
 
                 SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
-                //request.addProperty(AuthKey, AuthKeyValue);
 
                 for(PropertyInfo pi : parameters)
                     request.addProperty(pi);

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.terapanth.abtmm.about.AboutFragment;
 import com.terapanth.abtmm.home.HomeFragment;
+import com.terapanth.abtmm.narilok.NarilokFragment;
 import com.terapanth.abtmm.network.NetworkConnectivityCheckReceiver;
 import com.terapanth.abtmm.news.NewsSummaryFragment;
 import com.terapanth.abtmm.utils.NetworkUtils;

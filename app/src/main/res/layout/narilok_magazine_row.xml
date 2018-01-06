@@ -1,25 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/magazine_row"
-    android:layout_width="match_parent"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
 
-    <ImageView
-        android:id="@+id/magazine_img"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_gravity="center_vertical"
-        android:duplicateParentState="true"
-        android:layout_margin="10dp" />
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_narilok"
+        android:layout_width="@dimen/dimen_300_dp"
+        android:layout_height="@dimen/dimen_450_dp"
+        card_view:cardCornerRadius="@dimen/dimen_5_dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardBackgroundColor="@android:color/white"
+        card_view:contentPaddingLeft="@dimen/dimen_5_dp"
+        card_view:contentPaddingRight="@dimen/dimen_5_dp">
 
-    <TextView
-        android:id="@+id/magazine_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:duplicateParentState="true"
-        android:layout_margin="10dp"
-        android:textSize="16sp"
-        android:layout_gravity="center_vertical"
-        android:text="***Magazine name" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="7">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_0_dp"
+                android:layout_weight="6">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageview_narilok"
+                    android:scaleType="fitXY"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_0_dp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/narilok_magazine_title"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/size_24_sp"
+                    android:textColor="@android:color/black"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 </LinearLayout>

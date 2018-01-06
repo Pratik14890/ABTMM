@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/colorPrimaryDark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,13 +14,17 @@
         android:layout_marginBottom="@dimen/dimen_15_dp"
         android:layout_marginLeft="@dimen/dimen_5_dp"
         android:layout_marginRight="@dimen/dimen_5_dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dimen_5_dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_350_dp"
             android:orientation="horizontal"
-            android:layout_margin="@dimen/dimen_20_dp">
+            android:layout_marginTop="@dimen/dimen_20_dp"
+            android:layout_marginLeft="@dimen/dimen_15_dp"
+            android:layout_marginRight="@dimen/dimen_15_dp"
+            android:layout_marginBottom="@dimen/dimen_10_dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -29,19 +34,18 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/news_pager"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_300_dp"
+                android:layout_height="@dimen/dimen_320_dp"
                 android:layout_alignParentTop="true"/>
 
             <me.relex.circleindicator.CircleIndicator
                 android:id="@+id/news_indicator"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_48_dp"
+                android:layout_height="@dimen/dimen_30_dp"
                 android:layout_alignParentBottom="true"/>
 
             </RelativeLayout>
 
         </LinearLayout>
-
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -97,6 +101,11 @@
 
         </android.support.v7.widget.CardView>
 
+        <include layout="@layout/bottom_bar_layout"/>
+
     </LinearLayout>
 
 </ScrollView>
+
+
+

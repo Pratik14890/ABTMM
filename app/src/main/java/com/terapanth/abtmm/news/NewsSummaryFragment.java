@@ -130,7 +130,7 @@ public class NewsSummaryFragment extends Fragment implements View.OnClickListene
             @Override
             public void onComplete(Object obj) {
                 List<WS_NewsSummaryResponse> newsSummaryList = Arrays.asList(WS_NewsSummaryResponse[].class.cast(obj));
-                for(WS_NewsSummaryResponse ws_newsSummaryResponse : newsSummaryList)
+                for (WS_NewsSummaryResponse ws_newsSummaryResponse : newsSummaryList)
                     NewsSummaryFragment.this.newsSummaryList.add(ws_newsSummaryResponse.getNews());
 
                 setNewsSummaryData();
@@ -166,8 +166,6 @@ public class NewsSummaryFragment extends Fragment implements View.OnClickListene
                 mainActivity.onBackPressed();
                 break;
             case R.id.txt_bottom_view:
-//                StringUtils.openPostForm();
-
                 fragmentManager = getFragmentManager();
                 PostNewsFragment postNewsFragment = new PostNewsFragment();
                 fragmentTransaction = fragmentManager.beginTransaction();
