@@ -151,9 +151,9 @@ public class NarilokSummaryFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.card_view_narilok:
+            case R.id.card_view_narilok_summary:
                 int id = Integer.parseInt(String.valueOf(v.getTag()));
-                gotoNarilokSummaryFragment(id);
+                gotoNarilokDetailsFragment(id);
                 break;
 
             case R.id.toolbar_back_button:
@@ -166,16 +166,16 @@ public class NarilokSummaryFragment extends Fragment implements View.OnClickList
         }
     }
 
-    private void gotoNarilokSummaryFragment(int id) {
-        fragmentManager = getFragmentManager();
-        NarilokSummaryFragment narilokSummaryFragment = new NarilokSummaryFragment();
-        Bundle narilokBundle = new Bundle();
-        narilokBundle.putInt("magazineId", id);
-        narilokSummaryFragment.setArguments(narilokBundle);
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, narilokSummaryFragment);
-        fragmentTransaction.addToBackStack(NarilokSummaryFragment.class.getSimpleName());
-        fragmentTransaction.commit();
+    private void gotoNarilokDetailsFragment(int id) {
+//        fragmentManager = getFragmentManager();
+//        NarilokSummaryFragment narilokSummaryFragment = new NarilokSummaryFragment();
+//        Bundle narilokBundle = new Bundle();
+//        narilokBundle.putInt("magazineId", id);
+//        narilokSummaryFragment.setArguments(narilokBundle);
+//        fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.fragment_container, narilokSummaryFragment);
+//        fragmentTransaction.addToBackStack(NarilokSummaryFragment.class.getSimpleName());
+//        fragmentTransaction.commit();
     }
 
     @Override
