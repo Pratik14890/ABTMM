@@ -31,7 +31,8 @@ public class HomeFragment extends Fragment {
 
     private static ViewPager mPager;
     private static int currentPage = 0;
-    private static final Integer[] systemImages = {R.drawable.acharya, R.drawable.abtmm_logo, R.drawable.activity1_aao_chale_gao_ki_or, R.drawable.activity2_kanya_suraksha, R.drawable.activity3_swasth_parivaar_swasth_samaaj, R.drawable.activity4_tulsi_shiksha_pariyojana, R.drawable.jain_vidya_logo};
+//    private static final Integer[] systemImages = {R.drawable.acharya, R.drawable.abtmm_logo, R.drawable.activity1_aao_chale_gao_ki_or, R.drawable.activity2_kanya_suraksha, R.drawable.activity3_swasth_parivaar_swasth_samaaj, R.drawable.activity4_tulsi_shiksha_pariyojana, R.drawable.jain_vidya_logo};
+    private static final Integer[] systemImages = {R.drawable.one, R.drawable.two, R.drawable.three, R.drawable.four, R.drawable.five, R.drawable.six, R.drawable.seven};
     private ArrayList<Integer> SystemImagesArray = new ArrayList<Integer>();
     private Timer swipeTimer;
     private CircleIndicator indicator;

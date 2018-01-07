@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction fragmentTransaction;
     private NetworkConnectivityCheckReceiver networkConnectivityCheckReceiver;
     private boolean displayAlertForNetworkFailure = true;
-    public ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
     private ActionBar bar;
 
     @Override
@@ -133,18 +134,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(null == progressDialog)
-            progressDialog = new ProgressDialog(getApplicationContext());
 
-        if(null == networkConnectivityCheckReceiver) {
-            networkConnectivityCheckReceiver = new NetworkConnectivityCheckReceiver(this, displayAlertForNetworkFailure);
-            registerReceiver(networkConnectivityCheckReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        }
+        Log.d("TestMainActivity","In onResume");
+
+        if(null == progressDialog)
+            progressDialog = new ProgressDialog(this);
+
+        networkConnectivityCheckReceiver = new NetworkConnectivityCheckReceiver(this, displayAlertForNetworkFailure);
+        registerReceiver(networkConnectivityCheckReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d("TestMainActivity","In onPause");
 
         if(null != networkConnectivityCheckReceiver) {
             unregisterReceiver(networkConnectivityCheckReceiver);

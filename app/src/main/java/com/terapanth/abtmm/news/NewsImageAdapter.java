@@ -31,7 +31,7 @@ public class NewsImageAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
-        View myImageLayout = inflater.inflate(R.layout.slide, view, false);
+        View myImageLayout = inflater.inflate(R.layout.news_slider, view, false);
         ImageView myImage = (ImageView) myImageLayout.findViewById(R.id.image);
 
         Picasso.with(context).load(images.get(position)).error(R.drawable.no_image).into(myImage);

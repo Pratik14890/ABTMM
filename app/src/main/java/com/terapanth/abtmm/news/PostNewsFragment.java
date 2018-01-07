@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.terapanth.abtmm.MainActivity;
 import com.terapanth.abtmm.R;
+import com.terapanth.abtmm.commons.Constants;
 import com.terapanth.abtmm.home.HomeFragment;
 import com.terapanth.abtmm.services.OnExecuteComplete;
 import com.terapanth.abtmm.services.WebServiceHandler;
@@ -51,6 +53,7 @@ public class PostNewsFragment extends Fragment implements View.OnClickListener {
     private EditText etName, etContactNumber, etEmail, etDesc, etTitle;
     private EditText etImage1, etImage2, etImage3, etImage4, etImage5;
     private TextView btnUpload1, btnUpload2, btnUpload3, btnUpload4, btnUpload5;
+    private String base64Path1 = "", base64Path2 = "", base64Path3 = "", base64Path4 = "", base64Path5 = "", currentPath = "", currentContainer = "";
     private Bitmap bitmap;
     private ByteArrayOutputStream byteArrayOutputStream;
     private byte[] byteArray;
@@ -158,28 +161,42 @@ public class PostNewsFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btnUpload1:
+                updateContainerValues();
+                currentContainer = "First";
                 currentEdittext = etImage1;
                 openGalleryForImageUploading();
                 break;
 
             case R.id.btnUpload2:
+                updateContainerValues();
+                currentContainer = "Second";
                 currentEdittext = etImage2;
                 openGalleryForImageUploading();
+                base64Path2 = currentPath;
                 break;
 
             case R.id.btnUpload3:
+                updateContainerValues();
+                currentContainer = "Third";
                 currentEdittext = etImage3;
                 openGalleryForImageUploading();
+                base64Path3 = currentPath;
                 break;
 
             case R.id.btnUpload4:
+                updateContainerValues();
+                currentContainer = "Fourth";
                 currentEdittext = etImage4;
                 openGalleryForImageUploading();
+                base64Path4 = currentPath;
                 break;
 
             case R.id.btnUpload5:
+                updateContainerValues();
+                currentContainer = "Fifth";
                 currentEdittext = etImage5;
                 openGalleryForImageUploading();
+                base64Path5 = currentPath;
                 break;
 
             case R.id.post_data_view:
@@ -206,6 +223,7 @@ public class PostNewsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void openGalleryForImageUploading() {
+        mainActivity.showProgressDialog(true, Constants.LOADER_MESSAGE);
         byteArrayOutputStream = new ByteArrayOutputStream();
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -216,19 +234,17 @@ public class PostNewsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-//        progressDialog = ProgressDialog.show(context,"Image is Uploading","Please Wait...",false,false);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
-            imagePath = uri.getPath();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
                 getBase64Path();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            currentEdittext.setText(String.valueOf(convertImage));
-//            progressDialog.dismiss();
+            currentEdittext.setText("Image Uploaded Successfully.");
+            setBase64Value();
+            mainActivity.showProgressDialog(false,"");
         }
     }
 
@@ -272,11 +288,11 @@ public class PostNewsFragment extends Fragment implements View.OnClickListener {
         ws.addAuth();
         ws.addParameter("Title", etTitle.getText().toString().trim(), String.class);
         ws.addParameter("NewsContent", etDesc.getText().toString().trim(), String.class);
-        ws.addParameter("Img1Base64", etImage1.getText().toString().trim(), String.class);
-        ws.addParameter("Img2Base64", etImage2.getText().toString().trim(), String.class);
-        ws.addParameter("Img3Base64", etImage3.getText().toString().trim(), String.class);
-        ws.addParameter("Img4Base64", etImage4.getText().toString().trim(), String.class);
-        ws.addParameter("Img5Base64", etImage5.getText().toString().trim(), String.class);
+        ws.addParameter("Img1Base64", base64Path1, String.class);
+        ws.addParameter("Img2Base64", base64Path2, String.class);
+        ws.addParameter("Img3Base64", base64Path3, String.class);
+        ws.addParameter("Img4Base64", base64Path4, String.class);
+        ws.addParameter("Img5Base64", base64Path5, String.class);
         ws.addParameter("Name", etName.getText().toString().trim(), String.class);
         ws.addParameter("MobileNo", etContactNumber.getText().toString().trim(), String.class);
         ws.addParameter("EmailId", etEmail.getText().toString().trim(), String.class);
@@ -308,5 +324,39 @@ public class PostNewsFragment extends Fragment implements View.OnClickListener {
         fragmentTransaction.replace(R.id.fragment_container, homeFragment);
         fragmentTransaction.addToBackStack(HomeFragment.class.getSimpleName());
         fragmentTransaction.commit();
+    }
+
+    public void updateContainerValues() {
+        currentPath = "";
+        convertImage = "";
+        currentContainer = "";
+        currentEdittext = new EditText(context);
+    }
+
+    public void setBase64Value() {
+
+        if(!TextUtils.isEmpty(currentContainer)) {
+            switch(currentContainer) {
+                case "First":
+                    base64Path1 = convertImage;
+                    break;
+
+                case "Second":
+                    base64Path2 = convertImage;
+                    break;
+
+                case "Third":
+                    base64Path3 = convertImage;
+                    break;
+
+                case "Fourth":
+                    base64Path4 = convertImage;
+                    break;
+
+                case "Fifth":
+                    base64Path5 = convertImage;
+                    break;
+            }
+        }
     }
 }
